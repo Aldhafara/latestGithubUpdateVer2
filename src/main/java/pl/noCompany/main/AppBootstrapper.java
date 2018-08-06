@@ -133,4 +133,24 @@ public class AppBootstrapper extends Application {
     public Stage getStage() {
         return stage;
     }
+
+    public void loadPersonNew(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/newPerson.fxml"));
+
+            VBox window = (VBox) loader.load();
+
+
+
+            Stage editStage = new Stage();
+            editStage.setTitle("Dodaj osobę");
+            Scene scene = new Scene(window);
+            editStage.setScene(scene);
+            editStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

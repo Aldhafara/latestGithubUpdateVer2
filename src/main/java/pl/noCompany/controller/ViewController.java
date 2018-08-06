@@ -54,7 +54,7 @@ public class ViewController {
 
     @FXML
     public void handleShowMore() throws Exception {
-
+        this.main.loadPersonNew();
     }
 
     @FXML
