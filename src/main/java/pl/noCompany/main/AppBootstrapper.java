@@ -7,14 +7,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pl.noCompany.Main;
 import pl.noCompany.controller.ViewController;
-import java.io.IOException;
 
 
 import java.io.*;
 import java.net.*;
+import java.util.List;
 import java.util.Scanner;
-
-import static javafx.application.Application.launch;
 
 public class AppBootstrapper extends Application {
 
@@ -39,6 +37,10 @@ public class AppBootstrapper extends Application {
 
 
     public static String[] informations(String login) throws Exception {
+
+        Methods methods = new Methods();
+
+
         String[] repos = new String[3];
         repos[0] = "Brak danych";
         repos[1] = "Brak danych";
@@ -48,54 +50,33 @@ public class AppBootstrapper extends Application {
         /**
          * PONIZSZY BLOK SPRAWDZA POLACZENIE Z ADRESEM URL
          */
-        HttpURLConnection huc =  (HttpURLConnection)  url.openConnection();
+        HttpURLConnection huc = (HttpURLConnection) url.openConnection();
         huc.setRequestMethod("GET");
         huc.connect();
 
-        if (huc.getResponseCode()==404)
-        {
+        if (huc.getResponseCode() == 404) {
 
             repos[0] = ("Uzytkownik " + login + " nie istnieje.");
             return repos;
-             //System.exit(0);
         }
-        if ((huc.getResponseCode()!=404) && (huc.getResponseCode()>=400) && (huc.getResponseCode()<600))
-        {
+        if ((huc.getResponseCode() != 404) && (huc.getResponseCode() >= 400) && (huc.getResponseCode() < 600)) {
             repos[0] = "ERROR " + huc.getResponseCode();
             return repos;
-             //System.exit(0);
         }
 
-        /**
-         * PONIZSZY BLOK TWORZY TYMCZASOWY PLIK TEKSTOWY
-         * I WYPEŁNIA GO KODEM ZRODLOWYM STRONY
-         */
         Methods repositoryName = new Methods();
-        File file = new File("source.txt");
 
-        //System.out.println("Tworze plik tymczasowy: " + file.getName());
+        List<String> repos2 = repositoryName.sourceWriter(url);
 
-        repositoryName.sourceWriter(url,file);
-
-        //System.out.println("Przegladam pliki uzytkownika...");
-
-        /**
-         * PONIZSZY BLOK DEDYKOWANY JEST ZACHOWANIU PROGRAMU
-         * W SYTUACJI, GDY PODANY UZYTKOWNIK MA PUSTE REPOZYTORIUM.
-         *
-         * PROGRAM KASUJE PLIK TYMCZASOWY I KONCZY DZIALANIE
-         */
-        //File file = new File(fileName);
-        String[] rafData = repositoryName.sourceReader(file);
-        if ((rafData[0] == null)&&(rafData[1] == null))
+        if (repos2.size()<2)
         {
             repos[0] = "Uzytkownik " + login + " na puste repozytorium.";
             return repos;
 
         }
 
-        repos[1] = repositoryName.matterCutterName(rafData[0]);
-        repos[2] = repositoryName.matterCutterDate(rafData[1]);
+        repos[1] = repos2.get(0);
+        repos[2] = repos2.get(1);
 
 
         return repos;

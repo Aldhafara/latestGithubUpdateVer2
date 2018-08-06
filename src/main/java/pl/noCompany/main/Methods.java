@@ -2,6 +2,8 @@ package pl.noCompany.main;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Methods {
     public static String matterCutterDate(String line) {
@@ -26,8 +28,30 @@ public class Methods {
         return output;
     }
 
+    private static String matterCutterDate2(String line) {
+        char[] charArray = line.toCharArray();
+        char[] outputString = new char[100];
+        int i = 0;
 
-    public static String matterCutterName(String line) {
+
+        for (int j = 0; charArray[j] != 'Z'; j++) {
+            if (j >= 41) {
+
+                outputString[i] = charArray[j];
+                i++;
+                if (charArray[j] == 'T') {
+                    outputString[i - 1] = ' ';
+                    i++;
+                }
+            }
+        }
+
+        String output = new String(outputString);
+        return output;
+    }
+
+
+    private static String matterCutterName(String line) {
         char[] charArray = line.toCharArray();
         char[] outputString = new char[100];
         int i = 0;
@@ -46,16 +70,39 @@ public class Methods {
     }
 
 
-    public static void sourceWriter(URL sourceAdres, File fileName) throws Exception {
-        PrintWriter writer = new PrintWriter(fileName);
+    public static List sourceWriter(URL sourceAdres) throws Exception {
+        List<String> repositories = new ArrayList<>();
 
         BufferedReader line = new BufferedReader(
                 new InputStreamReader(sourceAdres.openStream()));
 
         String inputLine;
-        while ((inputLine = line.readLine()) != null)
-            writer.println(inputLine);
-        writer.close();
+        int i = 0;
+        String[] tab = new String[2];
+        while ((inputLine = line.readLine()) != null){
+            if (inputLine.contains("<li class=\"col-12"))
+                i = 0;
+
+            i++;
+            if (i == 5){
+                tab[0] = matterCutterName(inputLine);
+                System.out.println(tab[0]);
+                repositories.add(tab[0]);
+            }
+
+
+            if (inputLine.contains("Updated <relative-time datetime="))
+            {
+                tab[1] = matterCutterDate2(inputLine);
+                System.out.println(tab[1]);
+                repositories.add(tab[1]);
+                //break;
+            }
+
+        }
+
+        repositories.remove(0);
+        return repositories;
     }
 
 
