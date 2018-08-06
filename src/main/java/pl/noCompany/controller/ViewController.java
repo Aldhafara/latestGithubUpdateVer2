@@ -28,6 +28,8 @@ public class ViewController {
     private Label ERRORLabel;
     @FXML
     private ProgressBar progressBar;
+    @FXML
+    private Button showMore;
 
 
 
@@ -50,16 +52,15 @@ public class ViewController {
         };
     }
 
+    @FXML
+    public void handleShowMore() throws Exception {
 
-
-
-
+    }
 
     @FXML
     public void handleOk() throws Exception {
 
 /*
-
         progressBar.setProgress(0);
       //  copyWorker = createWorker();
 
@@ -72,6 +73,10 @@ public class ViewController {
 
         search();
 
+
+
+        if (!repozytoriumArea.getText().equals(" "))
+            showMore.setVisible(true);
     }
 
     @FXML
@@ -79,6 +84,7 @@ public class ViewController {
         repozytoriumArea.setText(" ");
         timeArea.setText(" ");
         ERRORLabel.setText(" ");
+        showMore.setVisible(false);
 
         userField.setText("podaj login");
     }
@@ -102,6 +108,7 @@ public class ViewController {
             alert.setTitle("Nie znaleziono repozytorium");
             alert.setHeaderText(null);
             alert.setContentText(values[0]);
+            showMore.setVisible(false);
             alert.showAndWait();
         }
     }

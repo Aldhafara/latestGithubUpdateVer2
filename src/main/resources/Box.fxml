@@ -10,11 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="243.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.noCompany.controller.ViewController">
+<VBox prefHeight="260.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.noCompany.controller.ViewController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="218.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <SplitPane dividerPositions="0.45878136200716846" orientation="VERTICAL" prefHeight="218.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
@@ -39,7 +39,7 @@
                         <ProgressBar fx:id="progressBar" layoutX="130.0" layoutY="87.0" prefHeight="18.0" prefWidth="378.0" progress="0.0" />
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="156.0" prefWidth="638.0">
                      <children>
                         <Text layoutX="50.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Najnowsze repozytorium:">
                            <font>
@@ -61,6 +61,11 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
+                        <Button fx:id="showMore" layoutX="569.0" layoutY="91.0" mnemonicParsing="false" onAction="#handleShowMore" prefHeight="38.0" prefWidth="57.0" text="Więcej..." textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="10.0" />
+                           </font>
+                        </Button>
                      </children>
                   </AnchorPane>
               </items>
