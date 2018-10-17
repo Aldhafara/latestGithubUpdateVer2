@@ -18,30 +18,16 @@ class Methods {
 
 
     private static String matterCutterDate(String line) {
-        char[] charArray = line.toCharArray();
-        char[] outputString = new char[100];
-        int i = 0;
+        line = line.split("\"")[1];
+        line = line.replace('T',' ');
+        line = line.substring(0,line.length()-1);
 
-
-        for (int j = 0; charArray[j] != 'Z'; j++) {
-            if (j >= 41) {
-
-                outputString[i] = charArray[j];
-                i++;
-                if (charArray[j] == 'T') {
-                    outputString[i - 1] = ' ';
-                    i++;
-                }
-            }
-        }
-
-        String output = new String(outputString);
-        return output;
+        return line;
     }
 
     private static String matterCutterName(String line) {
         char[] charArray = line.toCharArray();
-        char[] outputString = new char[100];
+        char[] outputString = new char[40];
         int i = 0;
 
         for (int j = 0; charArray[j] != '<'; j++) {
