@@ -33,14 +33,15 @@ public class AppBootstrapper extends Application {
         HttpURLConnection huc = (HttpURLConnection) url.openConnection();
         huc.setRequestMethod("GET");
         huc.connect();
+        int responseCode = huc.getResponseCode();
 
-        if (huc.getResponseCode() == 404) {
+        if (responseCode == 404) {
 
             repos[0] = ("Uzytkownik " + login + " nie istnieje.");
             return repos;
-        }
-        if ((huc.getResponseCode() != 404) && (huc.getResponseCode() >= 400) && (huc.getResponseCode() < 600)) {
-            repos[0] = "ERROR " + huc.getResponseCode();
+        }else
+        if ((responseCode >= 400) && (responseCode < 600)) {
+            repos[0] = "ERROR " + responseCode;
             return repos;
         }
 
