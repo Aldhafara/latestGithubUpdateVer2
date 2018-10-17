@@ -26,21 +26,13 @@ class Methods {
     }
 
     private static String matterCutterName(String line) {
-        char[] charArray = line.toCharArray();
-        char[] outputString = new char[40];
-        int i = 0;
 
-        for (int j = 0; charArray[j] != '<'; j++) {
-
-
-            if (charArray[j] != ' ') {
-                outputString[i] = charArray[j];
-                i++;
-            }
+        if (!line.contains("<head>")){
+        line = line.split("</a>")[0];
+        line = line.substring(6);
         }
 
-        String output = new String(outputString);
-        return output;
+        return line;
     }
 
     List sourceWriter(URL sourceAdres) throws Exception {
