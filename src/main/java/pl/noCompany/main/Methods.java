@@ -77,7 +77,6 @@ public class Methods {
     }
 
     private static String matterCutterName(String line) {
-        System.out.println(line);
 
         if (!line.contains("<head>")){
 
