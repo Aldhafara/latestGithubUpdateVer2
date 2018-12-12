@@ -5,10 +5,10 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class Methods {
+public class Methods {
     private List<Repository> repositories2 = new ArrayList<>();
 
-   void writeRepositoriesInConsole() {
+    private void writeRepositoriesInConsole() {
         for (Repository repo :repositories2) {
             System.out.println( repositories2.indexOf(repo)+1 + ": \"" + repo.getName()+ "\"");
             System.out.println( "   zaktualizowano: " +  repo.getTime() + " UTC");
@@ -16,6 +16,57 @@ class Methods {
         }
    }
 
+    public static String[] informations(String login) throws Exception {
+
+
+
+        String[] repos = new String[3];
+        repos[0] = "Brak danych";
+        repos[1] = "Brak danych";
+        repos[2] = "Brak danych";
+        URL url = new URL("https://github.com/" + login + "?tab=repositories");
+
+        /**
+         * PONIZSZY BLOK SPRAWDZA POLACZENIE Z ADRESEM URL
+         */
+        HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+        huc.setRequestMethod("GET");
+        huc.connect();
+        int responseCode = huc.getResponseCode();
+
+        if (responseCode == 404) {
+
+            repos[0] = ("Uzytkownik " + login + " nie istnieje.");
+            return repos;
+        }else
+        if ((responseCode >= 400) && (responseCode < 600)) {
+            repos[0] = "ERROR " + responseCode;
+            return repos;
+        }
+
+
+        Methods repositoryName = new Methods();
+
+        List repoStringList = repositoryName.sourceWriter(url);
+
+
+        System.out.println("___________________________________________");
+        repositoryName.writeRepositoriesInConsole();
+
+
+
+        if (repoStringList.size()<2)
+        {
+            repos[0] = "Uzytkownik " + login + " na puste repozytorium.";
+            return repos;
+
+        }
+
+        repos[1] = (String) repoStringList.get(0);
+        repos[2] = (String) repoStringList.get(1);
+
+        return repos;
+    }
 
     private static String matterCutterDate(String line) {
         line = line.split("\"")[1];
@@ -26,16 +77,19 @@ class Methods {
     }
 
     private static String matterCutterName(String line) {
+        System.out.println(line);
 
         if (!line.contains("<head>")){
-        line = line.split("</a>")[0];
-        line = line.substring(6);
+
+            line = line.split("/")[2];
+            line = line.split("\"")[0];
+
         }
 
         return line;
     }
 
-    List sourceWriter(URL sourceAdres) throws Exception {
+    private List sourceWriter(URL sourceAdres) throws Exception {
         List<String> repositories = new ArrayList<>();
 
         BufferedReader line = new BufferedReader(

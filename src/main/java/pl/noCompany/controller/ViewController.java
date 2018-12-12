@@ -3,6 +3,7 @@ package pl.noCompany.controller;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import pl.noCompany.main.AppBootstrapper;
+import pl.noCompany.main.Methods;
 
 import java.io.IOException;
 
@@ -39,7 +40,7 @@ public class ViewController {
         repozytoriumArea.setText(" ");
         timeArea.setText(" ");
 
-        String[] values = AppBootstrapper.informations(userField.getText());
+        String[] values = Methods.informations(userField.getText());
 
         if ("Brak danych".equals(values[0]))
         {
