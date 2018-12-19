@@ -3,6 +3,7 @@
 This program shows the latest user repository
 
 It is a primitive solution that reads HTML source code.
+The program supports the view in the window.
 It is very susceptible to any changes in the source code.
 Further ideas will be implemented in newer versions of this program.
 
